@@ -1,3 +1,5 @@
+package L1_Aug11 ;
+
 import java.util.Scanner;
 
 /**
@@ -7,33 +9,26 @@ import java.util.Scanner;
  *
  */
 
-public class Prime {
+public class Reverse {
 
 	public static void main(String[] args) {
 
 		Scanner scn = new Scanner(System.in);
-
 		int n = scn.nextInt();
 
-		int fact = 0;
+		int ans = 0;
 
-		int div = 1;
+		while (n != 0) {
 
-		while (div <= n) {
+			int rem = n % 10;
 
-			if (n % div == 0) {
-				fact++;
-			}
+			// System.out.print(rem);
+			ans = ans * 10 + rem;
+			n = n / 10;
 
-			div = div + 1;
 		}
 
-		if (fact == 2) {
-			System.out.println("Prime");
-		} else {
-			System.out.println("Not Prime");
-		}
+		System.out.println(ans);
 
 	}
-
 }

@@ -1,3 +1,5 @@
+package L1_Aug11 ;
+
 import java.util.Scanner;
 
 /**

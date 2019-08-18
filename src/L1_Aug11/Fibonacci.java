@@ -1,3 +1,5 @@
+package L1_Aug11 ;
+
 import java.util.Scanner;
 
 /**
@@ -7,24 +9,34 @@ import java.util.Scanner;
  *
  */
 
-public class EvenOdd {
+public class Fibonacci {
 
 	public static void main(String[] args) {
 
 		Scanner scn = new Scanner(System.in);
-
 		int n = scn.nextInt();
-		// int rem = n % 2;
 
-		if (n % 2 == 0) {
-			System.out.println("Even");
-		} else {
-			System.out.println("Odd");
+		int first = 0;
+		int second = 1;
+
+		int c = 1;
+
+		while (c <= n + 1) {
+			
+			System.out.println(first);
+			
+			int sum = first + second;
+			first = second;
+			second = sum;
+
+			c++;
 		}
 
 	}
-
 }
+
+
+
 
 
 

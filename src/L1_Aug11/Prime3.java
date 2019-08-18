@@ -1,4 +1,4 @@
-import java.util.Scanner;
+package L1_Aug11 ;
 
 /**
  * @author Garima Chhikara
@@ -7,13 +7,11 @@ import java.util.Scanner;
  *
  */
 
-public class Prime2 {
+public class Prime3 {
 
 	public static void main(String[] args) {
 
-		Scanner scn = new Scanner(System.in);
-
-		int n = scn.nextInt();
+		int n = 12;
 
 		int flag = 0;
 
@@ -22,17 +20,16 @@ public class Prime2 {
 		while (div <= n - 1) {
 
 			if (n % div == 0) {
+				System.out.println("Not Prime");
 				flag = 1;
+				break;
 			}
 
-			div = div + 1;
+			div++;
+
 		}
 
 		if (flag == 0)
 			System.out.println("Prime");
-		else
-			System.out.println("Not Prime");
-
 	}
-
 }
