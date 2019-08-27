@@ -11,41 +11,74 @@ import java.util.Scanner;
 
 public class FunctionDemo {
 
+	static int val = 100;
+
 	public static void main(String[] args) {
 
 		Scanner scn = new Scanner(System.in);
 
-		System.out.println("hello ");
+		// Part-1
+		System.out.println("----------- Part-1 -----------");
+		addition();
+		subtraction();
 
-		// fxn call
-		// addition();
-		// subtraction();
+		// Part-2
+		System.out.println("----------- Part-2 -----------");
+		int n1 = 10;
+		int n2 = 20;
+		additionParams(n1, n2);
 
-		// int n1 = scn.nextInt() ;
-		// int n2 = scn.nextInt() ;
-		// additionParams(n1, n2, 10, 800);
-
+		// Part-3
+		System.out.println("----------- Part-3 -----------");
 		System.out.println(additionReturn(30));
 
 		if (additionReturn(50) > 500) {
 			System.out.println("Good");
 		}
 
-		additionParams(2, 3, 4, 5);
-
-		// Part-3
-		System.out.println("----------- Part-3 -----------");
+		// Part-4
+		System.out.println("----------- Part-4 -----------");
 		int one = 10, two = 20;
 		int sum = DemoScopes(one, two);
 		System.out.println(sum);
 
 		System.out.println("bye");
 
+		// Part-5
 		System.out.println("----------- Part-5 -----------");
 		System.out.println(one + ", " + two);
 		Swap(one, two);
 		System.out.println(one + ", " + two);
 
+		// Part-6
+		System.out.println("----------- Part-6 -----------");
+		System.out.println(val); // 100
+		int val = 200;
+		System.out.println(val); // 200
+		System.out.println(FunctionDemo.val);// 100
+		val++;
+		System.out.println(val);
+		System.out.println(FunctionDemo.val);
+		FunctionDemo.val = FunctionDemo.val + val;
+		System.out.println(FunctionDemo.val);
+
+		FunctionDemo.val = 500;
+		one = 10;
+		val = 30;
+		System.out.println(FunctionDemo.val);
+		System.out.println(DemoGlobalScopes(one));
+		System.out.println(FunctionDemo.val);
+
+	}
+
+	public static int DemoGlobalScopes(int one) {
+
+		FunctionDemo.val = 1000;
+
+		int val = 600;
+		int sum = one + val;
+
+		return sum;
 	}
 
 	public static void Swap(int one, int two) {
@@ -67,14 +100,13 @@ public class FunctionDemo {
 	public static int additionReturn(int x) {
 
 		int res = x * x;
-
-		return 1000;
+		return res;
 	}
 
-	public static void additionParams(int a, int b, int c, int d) {
-
+	public static void additionParams(int a, int b) {
 		int sum = a + b;
 		System.out.println(sum);
+
 	}
 
 	// fxn definition
