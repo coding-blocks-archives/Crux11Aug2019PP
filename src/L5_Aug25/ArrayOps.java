@@ -61,7 +61,7 @@ public class ArrayOps {
 		return m;
 	}
 
-	public static int linearSearch(int[] arr, int item) {
-
-	}
+//	public static int linearSearch(int[] arr, int item) {
+//
+//	}
 }
