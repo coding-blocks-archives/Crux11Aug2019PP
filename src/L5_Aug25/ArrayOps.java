@@ -77,6 +77,7 @@ public class ArrayOps {
 		return m;
 	}
 
+<<<<<<< HEAD
 	public static int linearSearch(int[] arr, int item) {
 
 		for (int i = 0; i < arr.length; i++) {
@@ -242,4 +243,9 @@ public class ArrayOps {
 			display(arr);
 		}
 	}
+=======
+//	public static int linearSearch(int[] arr, int item) {
+//
+//	}
+>>>>>>> aaa914f665f9315e1a7011d63492ab275ccdf457
 }
