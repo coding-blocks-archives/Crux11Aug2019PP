@@ -1,11 +1,10 @@
-package Aug28;
+package Assignments.Aug28;
 
 import java.util.Scanner;
 
 public class PascalTriangle {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 
 		Scanner scn = new Scanner(System.in);
 
@@ -18,7 +17,7 @@ public class PascalTriangle {
 
 			int cst = 1;
 			while (cst <= nst) {
-				System.out.print(ncr(rows - 1, cst - 1)+"\t");
+				System.out.print(ncr(rows - 1, cst - 1) + "\t");
 				cst++;
 			}
 

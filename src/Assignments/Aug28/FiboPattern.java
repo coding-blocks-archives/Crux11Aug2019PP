@@ -1,15 +1,14 @@
-package Aug28;
+package Assignments.Aug28;
 
 import java.util.Scanner;
 
 public class FiboPattern {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 
 		Scanner scn = new Scanner(System.in);
-
 		pattern(scn.nextInt());
+		
 	}
 
 	public static void pattern(int n) {

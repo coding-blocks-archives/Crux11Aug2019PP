@@ -16,8 +16,8 @@ public class ArrayOps {
 	public static void main(String[] args) {
 
 		// int[] arr = takeInput();
-		int[] arr = { 50, 30, 10, 60, 5 };
-		display(arr);
+		int[] arr = { 11, 44, 5, 9, 8 };
+		// display(arr);
 
 		// System.out.println(max(arr));
 		// int res = linearSearch(arr, 40) ;
@@ -34,7 +34,9 @@ public class ArrayOps {
 		// subarray(arr);
 
 		// subset(arr);
-		bubbleSort(arr);
+		// bubbleSort(arr);
+		// selectionSort(arr);
+		insertionSort(arr);
 		// display(arr);
 
 	}
@@ -77,7 +79,6 @@ public class ArrayOps {
 		return m;
 	}
 
-<<<<<<< HEAD
 	public static int linearSearch(int[] arr, int item) {
 
 		for (int i = 0; i < arr.length; i++) {
@@ -243,9 +244,49 @@ public class ArrayOps {
 			display(arr);
 		}
 	}
-=======
-//	public static int linearSearch(int[] arr, int item) {
-//
-//	}
->>>>>>> aaa914f665f9315e1a7011d63492ab275ccdf457
+
+	public static void selectionSort(int[] arr) {
+
+		for (int count = 0; count <= arr.length - 2; count++) {
+
+			int min = count;
+
+			for (int j = count + 1; j <= arr.length - 1; j++) {
+
+				if (arr[j] < arr[min]) {
+					min = j;
+				}
+			}
+
+			// smallest value index
+			int temp = arr[min];
+			arr[min] = arr[count];
+			arr[count] = temp;
+
+			display(arr);
+		}
+
+	}
+
+	public static void insertionSort(int[] arr) {
+
+		for (int count = 1; count <= arr.length - 1; count++) {
+
+			// capture
+			int temp = arr[count];
+
+			// shifting
+			int j = count - 1;
+
+			while (j >= 0 && arr[j] > temp) {
+				arr[j + 1] = arr[j];
+				j--;
+			}
+
+			arr[j + 1] = temp;
+
+			display(arr);
+		}
+	}
+
 }

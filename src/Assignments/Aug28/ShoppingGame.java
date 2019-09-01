@@ -1,16 +1,15 @@
-package Aug28;
+package Assignments.Aug28;
 
 import java.util.Scanner;
 
 public class ShoppingGame {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 
 		Scanner scn = new Scanner(System.in);
 
 		int t = scn.nextInt();
-		
+
 		while (t > 0) {
 
 			int AyushLimit = scn.nextInt();
