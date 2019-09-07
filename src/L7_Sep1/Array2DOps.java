@@ -143,7 +143,7 @@ public class Array2DOps {
 
 	}
 
-	public static void matrixMultiplication(int[][] one, int[][] two) {
+	public static int[][] matrixMultiplication(int[][] one, int[][] two) {
 
 		int r1 = one.length;
 		int c1 = one[0].length;
@@ -152,6 +152,23 @@ public class Array2DOps {
 		int c2 = two[0].length;
 
 		int[][] res = new int[r1][c2];
+
+		for (int i = 0; i < res.length; i++) {
+
+			for (int j = 0; j < res[0].length; j++) {
+
+				int sum = 0;
+
+				for (int k = 0; k < c1; k++) {
+					sum += one[i][k] * two[k][j];
+				}
+
+				res[i][j] = sum;
+			}
+
+		}
+
+		return res;
 
 	}
 
