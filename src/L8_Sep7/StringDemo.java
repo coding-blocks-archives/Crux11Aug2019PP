@@ -56,29 +56,28 @@ public class StringDemo {
 
 		str = str.replace('l', 'w');
 		System.out.println(str);
-		
-		long start = System.currentTimeMillis() ;		
-		appendString();		
-		long end = System.currentTimeMillis() ;
-		
-		System.out.println(end-start);
+
+		long start = System.currentTimeMillis();
+		appendString();
+		long end = System.currentTimeMillis();
+
+		System.out.println(end - start);
 
 	}
 
 	public static void appendString() {
 
-		int n = 100000 ;
-		String str = "";
+		int n = 100000;
+		// String str = "";
+		StringBuilder sb = new StringBuilder();
 
 		for (int i = 1; i <= n; i++) {
-			str += i ;
- 		}
+			// str += i ;
+			sb.append(i);
+		}
 
 	}
 }
-
-
-
 
 
 
