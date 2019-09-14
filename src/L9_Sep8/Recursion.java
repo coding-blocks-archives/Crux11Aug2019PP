@@ -14,9 +14,17 @@ public class Recursion {
 		// PD(3);
 		// System.out.println(factorial(4));
 
-		int[] arr = { 10, 20, 30, 40, 50 };
+		int[] arr = { 100, 20, 60, 20, 20, 5 };
 
-		displayArray(arr, 0);
+		// displayArray(arr, 0);
+
+		// System.out.println(max(arr, 0));
+		System.out.println(firstIndex(arr, 0, 20));
+		System.out.println(lastIndex(arr, 0, 20));
+		int[] res = allIndex(arr, 0, 20, 0);
+
+		for (int val : res)
+			System.out.println(val);
 	}
 
 	public static void PD(int n) {
@@ -106,4 +114,68 @@ public class Recursion {
 		displayArray(arr, vidx + 1);
 	}
 
+	public static int max(int[] arr, int vidx) {
+
+		// base case
+		if (vidx == arr.length - 1) {
+			return arr[vidx];
+		}
+
+		// smaller problem
+		int sp = max(arr, vidx + 1);
+
+		// self work
+		return Math.max(sp, arr[vidx]);
+
+	}
+
+	public static int firstIndex(int[] arr, int vidx, int item) {
+
+		if (vidx == arr.length) {
+			return -1;
+		}
+
+		if (arr[vidx] == item) {
+			return vidx;
+		} else {
+			return firstIndex(arr, vidx + 1, item);
+		}
+
+	}
+
+	public static int lastIndex(int[] arr, int vidx, int item) {
+
+		if (vidx == arr.length) {
+			return -1;
+		}
+
+		int rr = lastIndex(arr, vidx + 1, item);
+
+		if (arr[vidx] == item && rr == -1) {
+			return vidx;
+		}
+
+		return rr;
+
+	}
+
+	public static int[] allIndex(int[] arr, int vidx, int item, int count) {
+
+		if (vidx == arr.length) {
+			int[] br = new int[count];
+			return br;
+		}
+
+		int[] rr;
+
+		if (arr[vidx] == item) {
+			rr = allIndex(arr, vidx + 1, item, count + 1);
+			rr[count] = vidx;
+		} else {
+			rr = allIndex(arr, vidx + 1, item, count);
+		}
+
+		return rr;
+
+	}
 }
