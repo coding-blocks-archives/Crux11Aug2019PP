@@ -14,7 +14,17 @@ public class RecursionGet {
 
 	public static void main(String[] args) {
 
-		System.out.println(getSSAscii("ab").size());
+		// System.out.println(getSSAscii("ab").size());
+		// System.out.println(getKPC("14567").size());
+
+		// System.out.println(getPermutation("abc"));
+
+		// System.out.println(getCases("a1B2"));
+
+		// System.out.println(getBoardPath(0, 10));
+
+		System.out.println(getMazePath(0, 0, 2, 2));
+
 	}
 
 	public static ArrayList<String> getSS(String str) {
@@ -70,8 +80,34 @@ public class RecursionGet {
 
 	}
 
-	public static ArrayList<String> getKPC(String str) {
+	public static ArrayList<String> getKPC(String str) { // 145
 
+		if (str.length() == 0) {
+			ArrayList<String> br = new ArrayList<>();
+			br.add("");
+			return br;
+		}
+
+		char ch = str.charAt(0); // 1
+		String ros = str.substring(1); // 45
+
+		// smaller problem
+		ArrayList<String> rr = getKPC(ros);
+
+		// self work
+		ArrayList<String> mr = new ArrayList<>();
+
+		String code = getCode(ch); // abc
+
+		for (String val : rr) {
+
+			for (int i = 0; i < code.length(); i++) { // a , b, c
+				mr.add(code.charAt(i) + val);
+			}
+
+		}
+
+		return mr;
 	}
 
 	public static String getCode(char ch) {
@@ -97,6 +133,142 @@ public class RecursionGet {
 			return "@#";
 		else
 			return "";
+	}
+
+	public static ArrayList<String> getPermutation(String str) {
+
+		if (str.length() == 0) {
+			ArrayList<String> br = new ArrayList<>();
+			br.add("");
+			return br;
+		}
+
+		char ch = str.charAt(0);
+		String ros = str.substring(1);
+
+		ArrayList<String> rr = getPermutation(ros);
+
+		ArrayList<String> mr = new ArrayList<>();
+
+		for (String val : rr) {
+
+			for (int i = 0; i <= val.length(); i++) {
+
+				String ans = val.substring(0, i) + ch + val.substring(i);
+				mr.add(ans);
+			}
+		}
+
+		return mr;
+
+	}
+
+	public static ArrayList<String> getCoinToss(int n) {
+
+		if (n == 0) {
+			ArrayList<String> br = new ArrayList<>();
+			br.add("");
+			return br;
+		}
+
+		ArrayList<String> rr = getCoinToss(n - 1);
+		ArrayList<String> mr = new ArrayList<>();
+
+		for (String val : rr) {
+			mr.add("H" + val);
+			mr.add("T" + val);
+		}
+
+		return mr;
+	}
+
+	public static ArrayList<String> getCases(String str) {
+
+		if (str.length() == 0) {
+			ArrayList<String> br = new ArrayList<>();
+			br.add("");
+			return br;
+		}
+
+		char ch = str.charAt(0);
+		String ros = str.substring(1);
+
+		ArrayList<String> rr = getCases(ros);
+
+		ArrayList<String> mr = new ArrayList<>();
+
+		if (Character.isDigit(ch)) {
+			for (String val : rr) {
+				mr.add(ch + val);
+			}
+		} else {
+			for (String val : rr) {
+				mr.add(Character.toLowerCase(ch) + val);
+				mr.add(Character.toUpperCase(ch) + val);
+			}
+		}
+
+		return mr;
+
+	}
+
+	public static ArrayList<String> getBoardPath(int curr, int end) {
+
+		if (curr == end) {
+			ArrayList<String> br = new ArrayList<>();
+			br.add("\n");
+			return br;
+		}
+
+		if (curr > end) {
+			ArrayList<String> br = new ArrayList<>();
+			return br;
+		}
+
+		ArrayList<String> mr = new ArrayList<>();
+
+		for (int dice = 1; dice <= 6; dice++) {
+
+			ArrayList<String> rr = getBoardPath(curr + dice, end);
+
+			for (String val : rr) {
+				mr.add(dice + val);
+			}
+
+		}
+
+		return mr;
+
+	}
+
+	public static ArrayList<String> getMazePath(int cr, int cc, int er, int ec) {
+
+		if (cr == er && cc == ec) {
+			ArrayList<String> br = new ArrayList<>();
+			br.add("");
+			return br;
+		}
+
+		if (cr > er || cc > ec) {
+			ArrayList<String> br = new ArrayList<>();
+			return br;
+		}
+
+		ArrayList<String> mr = new ArrayList<>();
+
+		ArrayList<String> rrh = getMazePath(cr, cc + 1, er, ec);
+
+		for (String val : rrh) {
+			mr.add("H" + val);
+		}
+
+		ArrayList<String> rrv = getMazePath(cr + 1, cc, er, ec);
+
+		for (String val : rrv) {
+			mr.add("V" + val);
+		}
+
+		return mr;
 	}
 
 }
