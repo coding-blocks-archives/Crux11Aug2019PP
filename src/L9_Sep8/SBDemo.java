@@ -45,10 +45,10 @@ public class SBDemo {
 
 		System.out.println(changeCase(scn.next()));
 
-		int[] arr = {8, 85, 89, 889, 897, 899, 859} ;
-		
+		int[] arr = { 8, 85, 89, 889, 897, 899, 859 };
+
 		formBiggestNumber(arr);
-		for(int val : arr) {
+		for (int val : arr) {
 			System.out.print(val);
 		}
 	}
@@ -125,42 +125,22 @@ public class SBDemo {
 
 			}
 
-		
 		}
 	}
-	
+
 	public static boolean compare(int n1, int n2) {
-		
-		String n1n2s = n1+ "" + n2 ;
-		String n2n1s = n2 + "" + n1 ;
-		
-		int res = n1n2s.compareTo(n2n1s)  ;
-		
-		if(res > 0) {
-			return false ; // dont swap
-		}else {
-			return true ; // swap
+
+		String n1n2s = n1 + "" + n2;
+		String n2n1s = n2 + "" + n1;
+
+		int res = n1n2s.compareTo(n2n1s);
+
+		if (res > 0) {
+			return false; // dont swap
+		} else {
+			return true; // swap
 		}
-		
+
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 }
