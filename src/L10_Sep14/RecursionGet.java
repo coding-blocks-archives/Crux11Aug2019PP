@@ -23,7 +23,9 @@ public class RecursionGet {
 
 		// System.out.println(getBoardPath(0, 10));
 
-		System.out.println(getMazePath(0, 0, 2, 2));
+		// System.out.println(getMazePathDMM(0, 0, 2, 2).size());
+
+		System.out.println(parenthesis("2*3-4*5"));
 
 	}
 
@@ -269,6 +271,126 @@ public class RecursionGet {
 		}
 
 		return mr;
+	}
+
+	public static ArrayList<String> getMazePathD(int cr, int cc, int er, int ec) {
+
+		if (cr == er && cc == ec) {
+			ArrayList<String> br = new ArrayList<>();
+			br.add("");
+			return br;
+		}
+
+		if (cr > er || cc > ec) {
+			ArrayList<String> br = new ArrayList<>();
+			return br;
+		}
+
+		ArrayList<String> mr = new ArrayList<>();
+
+		ArrayList<String> rrh = getMazePathD(cr, cc + 1, er, ec);
+
+		for (String val : rrh) {
+			mr.add("H" + val);
+		}
+
+		ArrayList<String> rrv = getMazePathD(cr + 1, cc, er, ec);
+
+		for (String val : rrv) {
+			mr.add("V" + val);
+		}
+
+		ArrayList<String> rrd = getMazePathD(cr + 1, cc + 1, er, ec);
+
+		for (String val : rrd) {
+			mr.add("D" + val);
+		}
+
+		return mr;
+
+	}
+
+	public static ArrayList<String> getMazePathDMM(int cr, int cc, int er, int ec) {
+
+		if (cr == er && cc == ec) {
+			ArrayList<String> br = new ArrayList<>();
+			br.add("\n");
+			return br;
+		}
+
+		ArrayList<String> mr = new ArrayList<>();
+
+		for (int move = 1; move <= ec - cc; move++) {
+			ArrayList<String> rrh = getMazePathDMM(cr, cc + move, er, ec);
+
+			for (String val : rrh) {
+				mr.add("H" + move + val);
+			}
+		}
+
+		for (int move = 1; move <= er - cr; move++) {
+
+			ArrayList<String> rrv = getMazePathDMM(cr + move, cc, er, ec);
+
+			for (String val : rrv) {
+				mr.add("V" + move + val);
+			}
+		}
+
+		for (int move = 1; move <= Math.min(ec - cc, er - cr); move++) {
+
+			ArrayList<String> rrd = getMazePathDMM(cr + move, cc + move, er, ec);
+
+			for (String val : rrd) {
+				mr.add("D" + move + val);
+			}
+		}
+		return mr;
+
+	}
+
+	public static ArrayList<Integer> parenthesis(String str) {
+
+		ArrayList<Integer> mr = new ArrayList<>();
+
+		for (int i = 0; i < str.length(); i++) {
+
+			char ch = str.charAt(i);
+
+			if (ch == '+' || ch == '-' || ch == '*') {
+
+				String p1 = str.substring(0, i);
+				String p2 = str.substring(i + 1);
+
+				// smaller problem
+				ArrayList<Integer> rr1 = parenthesis(p1);
+				ArrayList<Integer> rr2 = parenthesis(p2);
+
+				// self work
+				for (int val1 : rr1) {
+
+					for (int val2 : rr2) {
+
+						if (ch == '+') {
+							mr.add(val1 + val2);
+						} else if (ch == '-') {
+							mr.add(val1 - val2);
+						} else if (ch == '*') {
+							mr.add(val1 * val2);
+						}
+
+					}
+				}
+
+			}
+		}
+
+		if (mr.size() == 0) {
+			mr.add(Integer.parseInt(str));
+		}
+
+		return mr;
+
 	}
 
 }
