@@ -19,7 +19,16 @@ public class RecursionPrint {
 
 		// printPermutation2("abc", "");
 
-		coinToss(3, "");
+		// coinToss(3, "");
+
+		// validParenthesis(2, "", 0, 0);
+
+		// System.out.println(boardPath(0, 10, ""));
+
+		// System.out.println(mazePath(0, 0, 2, 2, ""));
+
+		lexicoCounting(0, 1000);
+
 	}
 
 	public static void printSS(String ques, String ans) {
@@ -39,11 +48,11 @@ public class RecursionPrint {
 
 	static int count = 0;
 
-	public static int printKPC(String ques, String ans) {
+	public static void printKPC(String ques, String ans) {
 
 		if (ques.length() == 0) {
 			System.out.println(ans);
-			return 1;
+			return;
 		}
 
 		char ch = ques.charAt(0);
@@ -51,13 +60,9 @@ public class RecursionPrint {
 
 		String code = RecursionGet.getCode(ch);
 
-		int c = 0;
-
 		for (int i = 0; i < code.length(); i++) {
-			c += printKPC(roq, ans + code.charAt(i));
+			printKPC(roq, ans + code.charAt(i));
 		}
-
-		return c;
 
 	}
 
@@ -107,7 +112,86 @@ public class RecursionPrint {
 
 	}
 
-	public static void validParenthesis(int n) {
+	public static void validParenthesis(int n, String ans, int open, int close) {
+
+		if (open == n && close == n) {
+			System.out.println(ans);
+			return;
+		}
+
+		if (open > n || close > n || close > open) {
+			return;
+		}
+
+		validParenthesis(n, ans + "(", open + 1, close);
+		validParenthesis(n, ans + ")", open, close + 1);
+
+	}
+
+	public static int boardPath(int curr, int end, String ans) {
+
+		if (curr == end) {
+			System.out.println(ans);
+			return 1;
+		}
+
+		if (curr > end) {
+			return 0;
+		}
+
+		int c = 0;
+
+		// if (curr == 0) {
+		// c += boardPath(curr + 1, end, ans + 1);
+		// c += boardPath(curr + 6, end, ans + 6);
+		// } else {
+		for (int dice = 1; dice <= 6; dice++) {
+			c += boardPath(curr + dice, end, ans + dice);
+		}
+		// }
+
+		return c;
+	}
+
+	public static int mazePath(int cr, int cc, int er, int ec, String ans) {
+
+		if (cr == er && cc == ec) {
+			System.out.println(ans);
+			return 1;
+		}
+
+		if (cr > er || cc > ec) {
+			return 0;
+		}
+
+		int ch = mazePath(cr, cc + 1, er, ec, ans + "H");
+		int cv = mazePath(cr + 1, cc, er, ec, ans + "V");
+
+		return ch + cv;
+	}
+
+	public static void lexicoCounting(int curr, int end) {
+
+		if (curr > end) {
+			return;
+		}
+
+		System.out.println(curr);
+
+		int i = 0;
+
+		if (curr == 0) {
+			i = 1;
+		}
+
+		while (i < 10) {
+			lexicoCounting(curr * 10 + i, end);
+			i++;
+		}
+
+	}
+
+	public static void palindromePartitioning(String str) {
 
 	}
 }
