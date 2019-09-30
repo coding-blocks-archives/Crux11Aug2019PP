@@ -27,7 +27,9 @@ public class RecursionPrint {
 
 		// System.out.println(mazePath(0, 0, 2, 2, ""));
 
-		lexicoCounting(0, 1000);
+		// lexicoCounting(0, 1000);
+
+		palindromePartitioning("nitin", "");
 
 	}
 
@@ -191,7 +193,42 @@ public class RecursionPrint {
 
 	}
 
-	public static void palindromePartitioning(String str) {
+	public static void palindromePartitioning(String str, String ans) {
+
+		if (str.length() == 0) {
+			System.out.println(ans);
+			return;
+		}
+
+		for (int i = 1; i <= str.length(); i++) {
+
+			String part = str.substring(0, i);
+			String ros = str.substring(i);
+
+			if (isPalindrome(part)) {
+				palindromePartitioning(ros, ans + part + " ");
+			}
+
+		}
+
+	}
+
+	public static boolean isPalindrome(String str) {
+
+		int i = 0;
+		int j = str.length() - 1;
+
+		while (i <= j) {
+
+			if (str.charAt(i) != str.charAt(j)) {
+				return false;
+			}
+
+			i++;
+			j--;
+		}
+
+		return true;
 
 	}
 }
