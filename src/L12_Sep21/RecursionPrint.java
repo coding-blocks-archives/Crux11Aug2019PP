@@ -50,6 +50,8 @@ public class RecursionPrint {
 
 	static int count = 0;
 
+	// Q : https://leetcode.com/problems/letter-combinations-of-a-phone-number/
+	
 	public static void printKPC(String ques, String ans) {
 
 		if (ques.length() == 0) {
@@ -113,6 +115,8 @@ public class RecursionPrint {
 		coinToss(n - 1, ans + "T");
 
 	}
+
+	// Q : https://leetcode.com/problems/generate-parentheses/
 
 	public static void validParenthesis(int n, String ans, int open, int close) {
 
@@ -193,6 +197,8 @@ public class RecursionPrint {
 
 	}
 
+	// Q : https://leetcode.com/problems/palindrome-partitioning/
+	
 	public static void palindromePartitioning(String str, String ans) {
 
 		if (str.length() == 0) {

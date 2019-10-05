@@ -19,12 +19,14 @@ public class Recursion {
 		// displayArray(arr, 0);
 
 		// System.out.println(max(arr, 0));
-		System.out.println(firstIndex(arr, 0, 20));
-		System.out.println(lastIndex(arr, 0, 20));
-		int[] res = allIndex(arr, 0, 20, 0);
-
-		for (int val : res)
-			System.out.println(val);
+//		System.out.println(firstIndex(arr, 0, 20));
+//		System.out.println(lastIndex(arr, 0, 20));
+//		int[] res = allIndex(arr, 0, 20, 0);
+//
+//		for (int val : res)
+//			System.out.println(val);
+		
+		System.out.println(fibonacci(50));
 	}
 
 	public static void PD(int n) {

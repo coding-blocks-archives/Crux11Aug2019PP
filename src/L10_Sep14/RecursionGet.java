@@ -184,6 +184,8 @@ public class RecursionGet {
 		return mr;
 	}
 
+	// Q : https://leetcode.com/problems/letter-case-permutation/
+	
 	public static ArrayList<String> getCases(String str) {
 
 		if (str.length() == 0) {
@@ -349,6 +351,8 @@ public class RecursionGet {
 
 	}
 
+	// Q : https://leetcode.com/problems/different-ways-to-add-parentheses/
+	
 	public static ArrayList<Integer> parenthesis(String str) {
 
 		ArrayList<Integer> mr = new ArrayList<>();

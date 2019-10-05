@@ -206,6 +206,8 @@ public class Backtracking {
 
 	}
 
+	// Q :https://www.geeksforgeeks.org/rat-in-a-maze-backtracking-2/
+	
 	public static void blockedMaze(int[][] board, int row, int col, String ans, boolean[][] visited) {
 
 		if (row == board.length - 1 && col == board[0].length - 1) {
@@ -233,6 +235,8 @@ public class Backtracking {
 
 	}
 
+	// Q : https://leetcode.com/problems/word-search/
+		
 	public static boolean searchWord(char[][] board, String word, int vidx, int row, int col, boolean[][] visited) {
 
 		if (vidx == word.length()) {
