@@ -17,7 +17,9 @@ public class TimeSpace {
 
 		// System.out.println(countPalindromicSS("nitinn"));
 
-		SOE(25);
+		// SOE(25);
+
+		System.out.println(power(2, 10));
 
 	}
 
@@ -104,4 +106,21 @@ public class TimeSpace {
 		}
 
 	}
+
+	public static int power(int x, int n) {
+
+		if (n == 0) {
+			return 1;
+		}
+
+		int rr = power(x, n / 2);
+
+		if (n % 2 == 0) {
+			return rr * rr;
+		} else {
+			return rr * rr * x;
+		}
+
+	}
+
 }
