@@ -19,7 +19,7 @@ public class TimeSpace {
 
 		// SOE(25);
 
-		System.out.println(power(2, 10));
+		// System.out.println(power(2, 10));
 
 	}
 
