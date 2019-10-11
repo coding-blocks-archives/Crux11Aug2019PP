@@ -29,7 +29,9 @@ public class RecursionPrint {
 
 		// lexicoCounting(0, 1000);
 
-		palindromePartitioning("nitin", "");
+		// palindromePartitioning("nitin", "");
+
+		coinTossNoConsecutiveHead(3, "", false);
 
 	}
 
@@ -51,7 +53,7 @@ public class RecursionPrint {
 	static int count = 0;
 
 	// Q : https://leetcode.com/problems/letter-combinations-of-a-phone-number/
-	
+
 	public static void printKPC(String ques, String ans) {
 
 		if (ques.length() == 0) {
@@ -114,6 +116,21 @@ public class RecursionPrint {
 		coinToss(n - 1, ans + "H");
 		coinToss(n - 1, ans + "T");
 
+	}
+
+	public static void coinTossNoConsecutiveHead(int n, String ans, boolean wasLastHead) {
+
+		if (n == 0) {
+			System.out.println(ans);
+			return;
+		}
+
+		if (wasLastHead) {
+			coinTossNoConsecutiveHead(n - 1, ans + "T", false);
+		} else {
+			coinTossNoConsecutiveHead(n - 1, ans + "H", true);
+			coinTossNoConsecutiveHead(n - 1, ans + "T", false);
+		}
 	}
 
 	// Q : https://leetcode.com/problems/generate-parentheses/
@@ -198,7 +215,7 @@ public class RecursionPrint {
 	}
 
 	// Q : https://leetcode.com/problems/palindrome-partitioning/
-	
+
 	public static void palindromePartitioning(String str, String ans) {
 
 		if (str.length() == 0) {
