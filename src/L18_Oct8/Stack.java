@@ -9,8 +9,8 @@ package L18_Oct8;
 
 public class Stack {
 
-	int[] data;
-	int tos;
+	protected int[] data;
+	protected int tos;
 
 	public Stack() {
 
