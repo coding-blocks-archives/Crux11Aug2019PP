@@ -12,33 +12,28 @@ public class Client {
 	public static void main(String[] args) throws Exception {
 
 		LinkedList list = new LinkedList();
-		
+
 		list.addLast(10);
 		list.addLast(20);
 		list.addLast(30);
 		list.addLast(40);
 		list.display();
-		list.addFirst(50);
-		list.addFirst(60);
-		list.addAt(list.size(), 70);
-		
+		list.addLast(50);
+		list.addLast(60);
+		// list.addAt(list.size(), 70);
+
 		list.display();
-		
-		System.out.println(list.removeFirst());
-		System.out.println(list.removeLast());
+
+		// System.out.println(list.removeFirst());
+		// System.out.println(list.removeLast());
+		// list.display();
+		// System.out.println(list.removeAt(2));
 		list.display();
-		System.out.println(list.removeAt(2));
+
+		// list.fold();
+		System.out.println(list.mid());
+		System.out.println(list.kFromLast(1));
 		list.display();
+
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
