@@ -452,7 +452,6 @@ public class LinkedList {
 	}
 
 	public void createDummyList() {
-
 		Node n1 = new Node(10);
 		Node n2 = new Node(20);
 		Node n3 = new Node(30);
@@ -472,14 +471,77 @@ public class LinkedList {
 		n7.next = n8;
 		n8.next = null;
 		n9.next = n10;
-		n10.next = n6;		
-		Node h1 = n1 ;
-		Node h2 = n9 ;
-		
-		intersection(h1, h2)
+		n10.next = n7;
+		Node h1 = n1;
+		Node h2 = n9;
+		System.out.println(intersection(h1, h2));
 	}
 
 	public int intersection(Node h1, Node h2) {
 
+		Node fp = h1;
+		Node sp = h2;
+
+		while (fp != sp) {
+
+			if (fp == null) {
+				fp = h2;
+			} else {
+				fp = fp.next;
+			}
+
+			if (sp == null) {
+				sp = h1;
+			} else {
+				sp = sp.next;
+			}
+
+		}
+
+		return fp.data;
 	}
+
+	public void kReverse(int k) throws Exception {
+
+		LinkedList prev = null ;
+
+		while (size != 0) {
+
+			LinkedList curr = new LinkedList();
+
+			for (int i = 1; i <= k && size != 0; i++) {
+				curr.addFirst(this.removeFirst());
+			}
+
+			if (prev == null) {
+				prev = curr;
+			} else {
+				prev.tail.next = curr.head;
+				prev.tail = curr.tail;
+				prev.size += curr.size;
+			}
+		}
+
+		this.head = prev.head ;
+		this.tail = prev.tail ;
+		this.size = prev.size ;
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	}
+
 }
+
+
+
+
