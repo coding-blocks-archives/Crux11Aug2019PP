@@ -1,0 +1,38 @@
+In the Java programming language, the keyword static indicates that the particular member belongs to a type itself, rather than to an instance of that type.
+This means that only one instance of that static member is created which is shared across all instances of the class.
+
+Static Fields/Variables
+
+	• In Java, if a field is declared static, then exactly a single copy of that field is created and shared among all instances of that class. 
+	• It doesn't matter how many times we initialize a class; there will always be only one copy of static field belonging to it. The value of this static field will be shared across all object of either same of any different class.
+
+	Compelling Reasons to Use Static Fields
+		• When the value of variable is independent of objects
+		• When the value is supposed to be shared across all objects
+
+	Key Points to Remember
+		• Since static variables belong to a class, they can be accessed directly using class name and don't need any object reference
+		• Static variables can only be declared at the class level
+		• Static fields can be accessed without object initialization
+		• Although we can access static fields using an object reference (like s1.numberOfStudents++) , we should refrain from using it as in this case it becomes difficult to figure whether it’s an instance variable or a class variable; instead, we should always refer to static variables using class name (for example, in this case, Student.numberOfStudents++)
+
+
+Static Methods
+
+	• Similar to static fields, static methods also belong to a class instead of the object, and so they can be called without creating the object of the class in which they reside. They're meant to be used without creating objects of the class.
+	• Static methods are generally used to perform an operation that is not dependent upon instance creation.
+	• Static methods are also widely used to create utility or helper classes so that they can be obtained without creating a new object of these classes. Take a look at Collections or Math utility classes from JDK, notice that all methods are static.
+
+	Compelling Reasons to Use static Methods
+		• To access/manipulate static variables and other static methods that don't depend upon objects
+		• Static methods are widely used in utility and helper classes
+	
+	Key Points to Remember
+		• Static methods cannot use this or super keywords
+		• The following combinations of the instance, class methods and variables are valid: 
+			1. Instance methods can directly access both instance methods and instance variables
+			2. Instance methods can also access static variables and static methods directly
+			3. Static methods can access all static variables and other static methods
+			4. Static methods cannot access instance variables and instance methods directly, they need some object reference to do so
+
+

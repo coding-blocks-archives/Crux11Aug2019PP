@@ -20,7 +20,7 @@ public class BinaryTree {
 		Node right;
 	}
 
-	private Node root;
+	private static Node root;
 
 	public BinaryTree(String str) {
 		scn = new Scanner(str);
@@ -70,10 +70,10 @@ public class BinaryTree {
 
 	private Node construct(int[] pre, int plo, int phi, int[] in, int ilo, int ihi) {
 
-		if(plo > phi || ilo > ihi) {
-			return null ;
+		if (plo > phi || ilo > ihi) {
+			return null;
 		}
-		
+
 		Node nn = new Node();
 		nn.data = pre[plo];
 
@@ -160,6 +160,23 @@ public class BinaryTree {
 		int rm = max(node.right);
 
 		return Math.max(node.data, Math.max(lm, rm));
+
+	}
+
+	public int min() {
+		return min(root);
+	}
+
+	private int min(Node node) {
+
+		if (node == null) {
+			return Integer.MAX_VALUE;
+		}
+
+		int lm = min(node.left);
+		int rm = min(node.right);
+
+		return Math.min(node.data, Math.min(lm, rm));
 
 	}
 
@@ -504,4 +521,79 @@ public class BinaryTree {
 
 	}
 
+	private class BSTPair {
+		int max = Integer.MIN_VALUE;
+		int min = Integer.MAX_VALUE;
+		boolean isBST = true;
+
+		Node largestBSTRootNode;
+		int largestBSTSize;
+	}
+
+	public void largestBST() {
+		BSTPair ans = largestBST2(root);
+		System.out.println(ans.isBST);
+		System.out.println(ans.largestBSTRootNode.data);
+		System.out.println(ans.largestBSTSize);
+	}
+
+	private boolean largestBST(Node node) {
+
+		if (node == null) {
+			return true;
+		}
+
+		boolean lbst = largestBST(node.left);
+		boolean rbst = largestBST(node.right);
+
+		boolean sbst = false;
+
+		if (node.data > max(node.left) && node.data < min(node.right)) {
+			sbst = true;
+		}
+
+		return lbst && rbst && sbst;
+
+	}
+
+	private BSTPair largestBST2(Node node) {
+
+		if (node == null) {
+			return new BSTPair();
+		}
+
+		BSTPair lbp = largestBST2(node.left);
+		BSTPair rbp = largestBST2(node.right);
+
+		BSTPair sbp = new BSTPair();
+
+		sbp.max = Math.max(node.data, Math.max(lbp.max, rbp.max));
+		sbp.min = Math.min(node.data, Math.min(lbp.min, rbp.min));
+
+		if (node.data > lbp.max && node.data < rbp.min && lbp.isBST && rbp.isBST) {
+			sbp.isBST = true;
+			sbp.largestBSTRootNode = node;
+			sbp.largestBSTSize = lbp.largestBSTSize + rbp.largestBSTSize + 1;
+		} else {
+
+			sbp.isBST = false;
+
+			if (lbp.largestBSTSize > rbp.largestBSTSize) {
+				sbp.largestBSTRootNode = lbp.largestBSTRootNode;
+				sbp.largestBSTSize = lbp.largestBSTSize;
+			} else {
+				sbp.largestBSTRootNode = rbp.largestBSTRootNode;
+				sbp.largestBSTSize = rbp.largestBSTSize;
+			}
+
+		}
+
+		return sbp;
+
+	}
+
 }
+
+
+
+
