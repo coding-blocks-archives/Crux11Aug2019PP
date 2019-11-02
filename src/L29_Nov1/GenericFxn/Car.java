@@ -25,8 +25,8 @@ public class Car {
 
 	// public int compareTo(Car other) {
 	// // return this.speed - other.speed;
-	// // return other.price - this.price;
-	// return this.color.compareTo(other.color);
+	// return other.price - this.price;
+	// // return this.color.compareTo(other.color);
 	// }
 
 }
