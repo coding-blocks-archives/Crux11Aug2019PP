@@ -23,8 +23,11 @@ public class BTClient {
 		// int[] pre = { 10, 20, 40, 50, 30, 60, 70, 80 };
 		// int[] in = { 40, 20, 50, 10, 60, 30, 70, 80 };
 
-		int[] pre = { 100, 50, 85, 75, 55, 90, 95, 200, 150, 170, 300, 350 };
-		int[] in = { 85, 50, 55, 75, 90, 95, 100, 150, 170, 200, 300, 350 };
+		// int[] pre = { 100, 50, 85, 75, 55, 90, 95, 200, 150, 170, 300, 350 };
+		// int[] in = { 85, 50, 55, 75, 90, 95, 100, 150, 170, 200, 300, 350 };
+
+		int[] pre = { 10, 20, 40, 80, 90, 50, 30, 70 };
+		int[] in = { 40, 80, 90, 20, 50, 10, 30, 70 };
 		BinaryTree bt = new BinaryTree(pre, in);
 		bt.display();
 
@@ -44,8 +47,10 @@ public class BTClient {
 		//
 		// System.out.println(bt.maxSubtreeSum1());
 		// System.out.println(bt.maxSubtreeSum3());
+
+		// bt.largestBST();
 		
-		bt.largestBST();
+		bt.verticalOrder();
 
 	}
 }
