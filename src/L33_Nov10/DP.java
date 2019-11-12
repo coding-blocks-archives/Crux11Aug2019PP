@@ -1,5 +1,7 @@
 package L33_Nov10;
 
+import java.util.Arrays;
+
 /**
  * @author Garima Chhikara
  * @email garima.chhikara@codingblocks.com
@@ -13,7 +15,7 @@ public class DP {
 
 		long start = System.currentTimeMillis();
 
-		int n = 2;
+		int n = 3;
 		// System.out.println(fibonacciTD(n, new int[n + 1]));
 		// System.out.println(fibonacciBU(n));
 		// System.out.println(fibonacciBUSE(n));
@@ -22,9 +24,25 @@ public class DP {
 		// System.out.println(boardPathBU(n));
 		// System.out.println(boardPathBUSE(n));
 
-		System.out.println(mazePathTD(0, 0, n, n, new int[n + 1][n + 1]));
-		System.out.println(mazePathBU(n, n));
-		
+		// System.out.println(mazePathTD(0, 0, n, n, new int[n + 1][n + 1]));
+		// System.out.println(mazePathBU(n, n));
+		// System.out.println(mazePathBUSE(n, n));
+		// System.out.println(mazePathDiagBUSE(n, n));
+
+		String s1 = "saturday";
+		String s2 = "sunday";
+
+		int[][] strg = new int[s1.length() + 1][s2.length() + 1];
+
+		for (int[] val : strg) {
+			Arrays.fill(val, -1);
+		}
+
+		// System.out.println(LCSTD(s1, s2, strg));
+		// System.out.println(LCSBU(s1, s2));
+
+		System.out.println(EditDistance(s1, s2));
+
 		long end = System.currentTimeMillis();
 
 		System.out.println("Time: " + (end - start));
@@ -219,16 +237,179 @@ public class DP {
 		for (int r = er; r >= 0; r--) {
 
 			for (int c = ec; c >= 0; c--) {
-				
-				if(r == er && c == ec) {
-					continue ;
+
+				if (r == er && c == ec) {
+					continue;
 				}
-				
+
 				strg[r][c] = strg[r][c + 1] + strg[r + 1][c];
 			}
 		}
 
 		return strg[0][0];
+
+	}
+
+	public static int mazePathBUSE(int er, int ec) {
+
+		int[] strg = new int[ec + 1];
+
+		Arrays.fill(strg, 1);
+
+		for (int slide = er - 1; slide >= 0; slide--) {
+
+			for (int col = ec; col >= 0; col--) {
+
+				if (col == ec) {
+					strg[col] = 1;
+				} else {
+					strg[col] = strg[col] + strg[col + 1];
+				}
+			}
+		}
+
+		return strg[0];
+
+	}
+
+	public static int mazePathDiagBUSE(int er, int ec) {
+
+		int diag = 0;
+		int[] strg = new int[ec + 1];
+
+		Arrays.fill(strg, 1);
+
+		for (int slide = er - 1; slide >= 0; slide--) {
+
+			for (int col = ec; col >= 0; col--) {
+
+				if (col == ec) {
+					strg[col] = 1;
+					diag = 1;
+				} else {
+					int temp = strg[col] + strg[col + 1] + diag;
+					diag = strg[col];
+					strg[col] = temp;
+				}
+			}
+		}
+
+		return strg[0];
+
+	}
+
+	public static int LCS(String s1, String s2) {
+
+		if (s1.length() == 0 || s2.length() == 0) {
+			return 0;
+		}
+
+		char ch1 = s1.charAt(0);
+		char ch2 = s2.charAt(0);
+
+		String ros1 = s1.substring(1);
+		String ros2 = s2.substring(1);
+
+		int ans = 0;
+
+		if (ch1 == ch2) {
+			ans = LCS(ros1, ros2) + 1;
+		} else {
+
+			int o1 = LCS(s1, ros2);
+			int o2 = LCS(ros1, s2);
+
+			ans = Math.max(o1, o2);
+
+		}
+
+		return ans;
+	}
+
+	public static int LCSTD(String s1, String s2, int[][] strg) {
+
+		if (s1.length() == 0 || s2.length() == 0) {
+			return 0;
+		}
+
+		if (strg[s1.length()][s2.length()] != -1) {
+			return strg[s1.length()][s2.length()];
+		}
+
+		char ch1 = s1.charAt(0);
+		char ch2 = s2.charAt(0);
+
+		String ros1 = s1.substring(1);
+		String ros2 = s2.substring(1);
+
+		int ans = 0;
+
+		if (ch1 == ch2) {
+			ans = LCSTD(ros1, ros2, strg) + 1;
+		} else {
+
+			int o1 = LCSTD(s1, ros2, strg);
+			int o2 = LCSTD(ros1, s2, strg);
+
+			ans = Math.max(o1, o2);
+
+		}
+
+		strg[s1.length()][s2.length()] = ans;
+
+		return ans;
+	}
+
+	public static int LCSBU(String s1, String s2) {
+
+		int[][] strg = new int[s1.length() + 1][s2.length() + 1];
+
+		for (int row = s1.length() - 1; row >= 0; row--) {
+
+			for (int col = s2.length() - 1; col >= 0; col--) {
+
+				if (s1.charAt(row) == s2.charAt(col)) {
+					strg[row][col] = strg[row + 1][col + 1] + 1;
+				} else {
+
+					int o1 = strg[row][col + 1];
+					int o2 = strg[row + 1][col];
+
+					strg[row][col] = Math.max(o1, o2);
+				}
+			}
+		}
+
+		return strg[0][0];
+
+	}
+
+	public static int EditDistance(String s1, String s2) {
+
+		if (s1.length() == 0 || s2.length() == 0) {
+			return Math.max(s1.length(), s2.length());
+		}
+
+		char ch1 = s1.charAt(0);
+		char ch2 = s2.charAt(0);
+
+		String ros1 = s1.substring(1);
+		String ros2 = s2.substring(1);
+
+		int ans = 0;
+
+		if (ch1 == ch2) {
+			ans = EditDistance(ros1, ros2);
+		} else {
+
+			int i = EditDistance(ros1, s2);
+			int d = EditDistance(s1, ros2);
+			int r = EditDistance(ros1, ros2);
+
+			ans = Math.min(r, Math.min(i, d)) + 1;
+		}
+
+		return ans;
 
 	}
 
