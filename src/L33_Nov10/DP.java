@@ -413,4 +413,246 @@ public class DP {
 
 	}
 
+	public static int EditDistanceTD(String s1, String s2, int[][] strg) {
+
+		if (s1.length() == 0 || s2.length() == 0) {
+			return Math.max(s1.length(), s2.length());
+		}
+
+		if (strg[s1.length()][s2.length()] != -1) {
+			return strg[s1.length()][s2.length()];
+		}
+
+		int ch1 = s1.charAt(0);
+		int ch2 = s2.charAt(0);
+
+		String ros1 = s1.substring(1);
+		String ros2 = s2.substring(1);
+
+		int ans;
+		if (ch1 == ch2) {
+			ans = EditDistanceTD(ros1, ros2, strg);
+		} else {
+
+			int i = EditDistanceTD(ros1, s2, strg);
+			int d = EditDistanceTD(s1, ros2, strg);
+			int r = EditDistanceTD(ros1, ros2, strg);
+
+			ans = Math.min(i, Math.min(d, r)) + 1;
+		}
+
+		strg[s1.length()][s2.length()] = ans;
+
+		return ans;
+
+	}
+
+	public static int EditDistanceBU(String s1, String s2) {
+
+		int[][] strg = new int[s1.length() + 1][s2.length() + 1];
+
+		for (int row = s1.length(); row >= 0; row--) {
+
+			for (int col = s2.length(); col >= 0; col--) {
+
+				if (row == s1.length()) {
+					strg[row][col] = s2.length() - col;
+					continue;
+				}
+
+				if (col == s2.length()) {
+					strg[row][col] = s1.length() - row;
+					continue;
+				}
+
+				if (s1.charAt(row) == s2.charAt(col)) {
+					strg[row][col] = strg[row + 1][col + 1];
+				} else {
+
+					int i = strg[row + 1][col];
+					int d = strg[row][col + 1];
+					int r = strg[row + 1][col + 1];
+
+					strg[row][col] = Math.min(i, Math.min(d, r)) + 1;
+				}
+			}
+		}
+
+		return strg[0][0];
+
+	}
+
+	public static int MCM(int[] arr, int si, int ei) {
+
+		if (si + 1 == ei) {
+			return 0;
+		}
+
+		int min = Integer.MAX_VALUE;
+
+		for (int k = si + 1; k <= ei - 1; k++) {
+
+			int fp = MCM(arr, si, k); // arr[si]*arr[k]
+			int sp = MCM(arr, k, ei); // arr[k]*arr[ei]
+
+			int sw = arr[si] * arr[k] * arr[ei];
+
+			int total = fp + sp + sw;
+
+			if (total < min) {
+				min = total;
+			}
+
+		}
+
+		return min;
+
+	}
+
+	public static int MCMTD(int[] arr, int si, int ei, int[][] strg) {
+
+		if (si + 1 == ei) {
+			return 0;
+		}
+
+		if (strg[si][ei] != 0) {
+			return strg[si][ei];
+		}
+
+		int min = Integer.MAX_VALUE;
+
+		for (int k = si + 1; k <= ei - 1; k++) {
+
+			int fp = MCMTD(arr, si, k, strg); // arr[si]*arr[k]
+			int sp = MCMTD(arr, k, ei, strg); // arr[k]*arr[ei]
+
+			int sw = arr[si] * arr[k] * arr[ei];
+
+			int total = fp + sp + sw;
+
+			if (total < min) {
+				min = total;
+			}
+
+		}
+
+		strg[si][ei] = min;
+
+		return min;
+
+	}
+
+	public static int MCMBU(int[] arr) {
+
+		int n = arr.length;
+
+		int[][] strg = new int[n][n];
+
+		for (int slide = 2; slide <= n - 1; slide++) {
+
+			for (int si = 0; si <= n - slide - 1; si++) {
+
+				int ei = si + slide;
+
+				// copy paste
+				int min = Integer.MAX_VALUE;
+
+				for (int k = si + 1; k <= ei - 1; k++) {
+
+					int fp = strg[si][k]; // arr[si]*arr[k]
+					int sp = strg[k][ei]; // arr[k]*arr[ei]
+
+					int sw = arr[si] * arr[k] * arr[ei];
+
+					int total = fp + sp + sw;
+
+					if (total < min) {
+						min = total;
+					}
+
+				}
+
+				strg[si][ei] = min;
+
+			}
+
+		}
+
+		return strg[0][n - 1];
+
+	}
+
+	public static int WineProblem(int[] price, int si, int ei, int yr) {
+
+		if (si == ei) {
+			return price[si] * yr;
+		}
+
+		int start = WineProblem(price, si + 1, ei, yr + 1) + price[si] * yr;
+		int end = WineProblem(price, si, ei - 1, yr + 1) + price[ei] * yr;
+
+		int ans = Math.max(start, end);
+
+		return ans;
+
+	}
+
+	public static int WineProblemTD(int[] price, int si, int ei, int[][] strg) {
+
+		int yr = price.length - ei + si;
+
+		if (si == ei) {
+			return price[si] * yr;
+		}
+
+		if (strg[si][ei] != 0) {
+			return strg[si][ei];
+		}
+
+		int start = WineProblemTD(price, si + 1, ei, strg) + price[si] * yr;
+		int end = WineProblemTD(price, si, ei - 1, strg) + price[ei] * yr;
+
+		int ans = Math.max(start, end);
+
+		strg[si][ei] = ans;
+
+		return ans;
+
+	}
+
+	public static int WineProblemBU(int[] price) {
+
+		int n = price.length;
+
+		int[][] strg = new int[price.length][price.length];
+
+		for (int slide = 0; slide <= n - 1; slide++) {
+
+			for (int si = 0; si <= n - slide - 1; si++) {
+
+				int ei = si + slide;
+
+				int yr = price.length - ei + si;
+
+				if (si == ei) {
+					strg[si][ei] = price[si] * yr;
+					continue;
+				}
+
+				// copy
+				int start = strg[si + 1][ei] + price[si] * yr;
+				int end = strg[si][ei - 1] + price[ei] * yr;
+
+				int ans = Math.max(start, end);
+
+				strg[si][ei] = ans;
+
+			}
+
+		}
+
+		return strg[0][n - 1];
+
+	}
+
 }
