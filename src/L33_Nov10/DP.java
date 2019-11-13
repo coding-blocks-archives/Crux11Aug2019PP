@@ -41,7 +41,24 @@ public class DP {
 		// System.out.println(LCSTD(s1, s2, strg));
 		// System.out.println(LCSBU(s1, s2));
 
-		System.out.println(EditDistance(s1, s2));
+		// System.out.println(EditDistance(s1, s2));
+
+		int[] wt = { 1, 3, 4, 5 };
+		int[] price = { 1, 4, 5, 7 };
+
+		int cap = 7;
+
+		// System.out.println(Knapsack(wt, price, cap, 0));
+		// System.out.println(KnapsackTD(wt, price, cap, 0, new int[wt.length][cap +
+		// 1]));
+		// System.out.println(KnapsackBU(wt, price, cap));
+
+		String src = "abcdenjvhdiuhv";
+		String pat = "?b*?**cbvjdhvui";
+
+		// System.out.println(WildcardMatching(src, pat));
+		System.out.println(WildcardMatchingTD(src, pat, new int[src.length() + 1][pat.length() + 1]));
+		System.out.println(WilcardMatchingBU(src, pat));
 
 		long end = System.currentTimeMillis();
 
@@ -652,6 +669,216 @@ public class DP {
 		}
 
 		return strg[0][n - 1];
+
+	}
+
+	public static int Knapsack(int[] wt, int[] price, int cap, int vidx) {
+
+		if (vidx == wt.length) {
+			return 0;
+		}
+
+		int include = 0;
+		if (cap >= wt[vidx]) {
+			include = Knapsack(wt, price, cap - wt[vidx], vidx + 1) + price[vidx];
+		}
+
+		int exclude = Knapsack(wt, price, cap, vidx + 1);
+
+		return Math.max(include, exclude);
+	}
+
+	public static int KnapsackNBC(int[] wt, int[] price, int cap, int vidx) {
+
+		if (cap < 0) {
+			return Integer.MIN_VALUE;
+		}
+
+		if (vidx == wt.length) {
+			return 0;
+		}
+
+		int include = KnapsackNBC(wt, price, cap - wt[vidx], vidx + 1) + price[vidx];
+		int exclude = KnapsackNBC(wt, price, cap, vidx + 1);
+
+		return Math.max(include, exclude);
+	}
+
+	public static int KnapsackTD(int[] wt, int[] price, int cap, int vidx, int[][] strg) {
+
+		if (vidx == wt.length) {
+			return 0;
+		}
+
+		if (strg[vidx][cap] != 0) {
+			return strg[vidx][cap];
+		}
+
+		int include = 0;
+		if (cap >= wt[vidx]) {
+			include = KnapsackTD(wt, price, cap - wt[vidx], vidx + 1, strg) + price[vidx];
+		}
+
+		int exclude = KnapsackTD(wt, price, cap, vidx + 1, strg);
+
+		strg[vidx][cap] = Math.max(include, exclude);
+
+		return Math.max(include, exclude);
+	}
+
+	public static int KnapsackBU(int[] wt, int[] price, int cap) {
+
+		int[][] strg = new int[wt.length + 1][cap + 1];
+
+		for (int row = wt.length - 1; row >= 0; row--) {
+
+			for (int col = cap; col >= 1; col--) {
+
+				int include = 0;
+				if (col >= wt[row]) {
+					include = strg[row + 1][col - wt[row]] + price[row];
+				}
+
+				int exclude = strg[row + 1][col];
+
+				strg[row][col] = Math.max(include, exclude);
+			}
+
+		}
+
+		return strg[0][cap];
+
+	}
+
+	public static boolean WildcardMatching(String src, String pat) {
+
+		if (src.length() == 0 && pat.length() == 0) {
+			return true;
+		}
+
+		if (src.length() != 0 && pat.length() == 0) {
+			return false;
+		}
+
+		if (src.length() == 0 && pat.length() != 0) {
+
+			for (int i = 0; i < pat.length(); i++) {
+				if (pat.charAt(i) != '*') {
+					return false;
+				}
+			}
+
+			return true;
+		}
+
+		char chs = src.charAt(0);
+		char chp = pat.charAt(0);
+
+		String ros = src.substring(1);
+		String rop = pat.substring(1);
+
+		boolean ans;
+
+		if (chs == chp || chp == '?') {
+			ans = WildcardMatching(ros, rop);
+		} else if (chp == '*') {
+			ans = WildcardMatching(src, rop) || WildcardMatching(ros, pat);
+		} else {
+			ans = false;
+		}
+
+		return ans;
+
+	}
+
+	public static boolean WildcardMatchingTD(String src, String pat, int[][] strg) {
+
+		if (src.length() == 0 && pat.length() == 0) {
+			return true;
+		}
+
+		if (src.length() != 0 && pat.length() == 0) {
+			return false;
+		}
+
+		if (src.length() == 0 && pat.length() != 0) {
+
+			for (int i = 0; i < pat.length(); i++) {
+				if (pat.charAt(i) != '*') {
+					return false;
+				}
+			}
+
+			return true;
+		}
+
+		if (strg[src.length()][pat.length()] != 0) {
+			return strg[src.length()][pat.length()] == 2 ? true : false;
+		}
+
+		char chs = src.charAt(0);
+		char chp = pat.charAt(0);
+
+		String ros = src.substring(1);
+		String rop = pat.substring(1);
+
+		boolean ans;
+
+		if (chs == chp || chp == '?') {
+			ans = WildcardMatchingTD(ros, rop, strg);
+		} else if (chp == '*') {
+			ans = WildcardMatchingTD(src, rop, strg) || WildcardMatchingTD(ros, pat, strg);
+		} else {
+			ans = false;
+		}
+
+		strg[src.length()][pat.length()] = (ans == true ? 2 : 1);
+
+		return ans;
+
+	}
+
+	public static boolean WilcardMatchingBU(String src, String pat) {
+
+		boolean[][] strg = new boolean[src.length() + 1][pat.length() + 1];
+
+		strg[src.length()][pat.length()] = true;
+
+		for (int row = src.length(); row >= 0; row--) {
+
+			for (int col = pat.length() - 1; col >= 0; col--) {
+
+				if (row == src.length()) {
+
+					if (pat.charAt(col) == '*') {
+						strg[row][col] = strg[row][col + 1];
+					} else {
+						strg[row][col] = false;
+					}
+
+					continue;
+				}
+
+				// copy
+				char chs = src.charAt(row);
+				char chp = pat.charAt(col);
+
+				boolean ans;
+
+				if (chs == chp || chp == '?') {
+					ans = strg[row + 1][col + 1];
+				} else if (chp == '*') {
+					ans = strg[row][col + 1] || strg[row + 1][col];
+				} else {
+					ans = false;
+				}
+
+				strg[row][col] = ans;
+
+			}
+		}
+
+		return strg[0][0];
 
 	}
 
