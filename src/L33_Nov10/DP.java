@@ -15,7 +15,7 @@ public class DP {
 
 		long start = System.currentTimeMillis();
 
-		int n = 3;
+		// int n = 1000;
 		// System.out.println(fibonacciTD(n, new int[n + 1]));
 		// System.out.println(fibonacciBU(n));
 		// System.out.println(fibonacciBUSE(n));
@@ -43,8 +43,8 @@ public class DP {
 
 		// System.out.println(EditDistance(s1, s2));
 
-		int[] wt = { 1, 3, 4, 5 };
-		int[] price = { 1, 4, 5, 7 };
+		// int[] wt = { 1, 3, 4, 5 };
+		// int[] price = { 1, 4, 5, 7 };
 
 		int cap = 7;
 
@@ -57,8 +57,22 @@ public class DP {
 		String pat = "?b*?**cbvjdhvui";
 
 		// System.out.println(WildcardMatching(src, pat));
-		System.out.println(WildcardMatchingTD(src, pat, new int[src.length() + 1][pat.length() + 1]));
-		System.out.println(WilcardMatchingBU(src, pat));
+		// System.out.println(WildcardMatchingTD(src, pat, new int[src.length() +
+		// 1][pat.length() + 1]));
+		// System.out.println(WilcardMatchingBU(src, pat));
+
+		int[] prices = { 0, 3, 5, 8, 9, 10, 17, 17, 20, 78, 45, 23, 1, 9, 10 };
+
+		// System.out.println(rodCut(prices, prices.length - 1));
+		// System.out.println(rodCutTD(prices, prices.length - 1, new
+		// int[prices.length]));
+		// System.out.println(rodCutBU(prices));
+
+		// System.out.println(noOfBSTTD(10000, new int[10000 + 1]));
+		// setBits(10);
+
+		System.out.println(boundaryPaths(0, 1, 0, 2, 3));
+		System.out.println(boundaryPathsBU(0, 1, 0, 2, 3));
 
 		long end = System.currentTimeMillis();
 
@@ -315,6 +329,8 @@ public class DP {
 
 	}
 
+	// Q : https://www.geeksforgeeks.org/longest-common-subsequence-dp-4/
+
 	public static int LCS(String s1, String s2) {
 
 		if (s1.length() == 0 || s2.length() == 0) {
@@ -400,6 +416,8 @@ public class DP {
 		return strg[0][0];
 
 	}
+
+	// Q : https://www.geeksforgeeks.org/edit-distance-dp-5/
 
 	public static int EditDistance(String s1, String s2) {
 
@@ -498,6 +516,8 @@ public class DP {
 		return strg[0][0];
 
 	}
+
+	// Q : https://www.geeksforgeeks.org/matrix-chain-multiplication-dp-8/
 
 	public static int MCM(int[] arr, int si, int ei) {
 
@@ -599,6 +619,9 @@ public class DP {
 
 	}
 
+	// Q : https://www.hackerearth.com/practice/notes/dynamic-programming-i-1/
+	// Q : https://www.geeksforgeeks.org/maximum-profit-sale-wines/
+
 	public static int WineProblem(int[] price, int si, int ei, int yr) {
 
 		if (si == ei) {
@@ -671,6 +694,10 @@ public class DP {
 		return strg[0][n - 1];
 
 	}
+
+	// Q : 0-1 Knapsack : https://www.geeksforgeeks.org/0-1-knapsack-problem-dp-10/
+	// Q : Fractional Knapsack :
+	// https://www.geeksforgeeks.org/fractional-knapsack-problem/
 
 	public static int Knapsack(int[] wt, int[] price, int cap, int vidx) {
 
@@ -749,6 +776,8 @@ public class DP {
 		return strg[0][cap];
 
 	}
+
+	// Q : https://www.geeksforgeeks.org/wildcard-pattern-matching/
 
 	public static boolean WildcardMatching(String src, String pat) {
 
@@ -879,6 +908,226 @@ public class DP {
 		}
 
 		return strg[0][0];
+
+	}
+
+	// Q : https://www.geeksforgeeks.org/cutting-a-rod-dp-13/
+
+	public static int rodCut(int[] price, int n) {
+
+		int max = price[n];
+
+		int left = 1;
+		int right = n - 1;
+
+		while (left <= right) {
+
+			int fp = rodCut(price, left);
+			int sp = rodCut(price, right);
+
+			int total = fp + sp;
+
+			if (total > max) {
+				max = total;
+			}
+
+			left++;
+			right--;
+		}
+
+		return max;
+	}
+
+	public static int rodCutTD(int[] price, int n, int[] strg) {
+
+		if (strg[n] != 0) {
+			return strg[n];
+		}
+
+		int max = price[n];
+
+		int left = 1;
+		int right = n - 1;
+
+		while (left <= right) {
+
+			int fp = rodCutTD(price, left, strg);
+			int sp = rodCutTD(price, right, strg);
+
+			int total = fp + sp;
+
+			if (total > max) {
+				max = total;
+			}
+
+			left++;
+			right--;
+		}
+
+		strg[n] = max;
+
+		return max;
+	}
+
+	public static int rodCutBU(int[] price) {
+
+		int[] strg = new int[price.length];
+
+		strg[0] = price[0];
+		strg[1] = price[1];
+
+		for (int n = 2; n < strg.length; n++) {
+
+			int max = price[n];
+
+			int left = 1;
+			int right = n - 1;
+
+			while (left <= right) {
+
+				int fp = strg[left];
+				int sp = strg[right];
+
+				int total = fp + sp;
+
+				if (total > max) {
+					max = total;
+				}
+
+				left++;
+				right--;
+			}
+
+			strg[n] = max;
+
+		}
+
+		return strg[strg.length - 1];
+
+	}
+
+	// Q : https://leetcode.com/problems/unique-binary-search-trees/
+
+	public static int noOfBSTTD(int n, int[] strg) {
+
+		if (n <= 1) {
+			return 1;
+		}
+
+		if (strg[n] != 0) {
+			return strg[n];
+		}
+
+		int sum = 0;
+
+		for (int i = 1; i <= n; i++) {
+
+			int lbst = noOfBSTTD(i - 1, strg);
+			int rbst = noOfBSTTD(n - i, strg);
+
+			int total = lbst * rbst;
+
+			sum += total;
+
+		}
+
+		strg[n] = sum;
+
+		return sum;
+
+	}
+
+	// Q : https://leetcode.com/problems/counting-bits/
+
+	public static void setBits(int n) {
+
+		int[] strg = new int[n + 1];
+
+		strg[0] = 0;
+		strg[1] = 1;
+
+		for (int i = 2; i <= n; i++) {
+
+			if (i % 2 == 0) {
+				strg[i] = strg[i / 2];
+			} else {
+				strg[i] = strg[i / 2] + 1;
+			}
+		}
+
+		for (int val : strg) {
+			System.out.println(val);
+		}
+
+	}
+
+	// Q : https://leetcode.com/problems/out-of-boundary-paths/
+
+	public static int boundaryPaths(int cr, int cc, int er, int ec, int moves) {
+
+		if (cr < 0 || cr > er || cc < 0 || cc > ec) {
+			return 1;
+		}
+
+		if (moves == 0) {
+			return 0;
+		}
+
+		int t = boundaryPaths(cr - 1, cc, er, ec, moves - 1);
+		int d = boundaryPaths(cr + 1, cc, er, ec, moves - 1);
+		int l = boundaryPaths(cr, cc - 1, er, ec, moves - 1);
+		int r = boundaryPaths(cr, cc + 1, er, ec, moves - 1);
+
+		return t + d + l + r;
+	}
+
+	public static int boundaryPathsTD(int cr, int cc, int er, int ec, int moves, int[][][] strg) {
+
+		if (cr < 0 || cr > er || cc < 0 || cc > ec) {
+			return 1;
+		}
+
+		if (moves == 0) {
+			return 0;
+		}
+
+		if (strg[moves][cr][cc] != -1) {
+			return strg[moves][cr][cc];
+		}
+
+		int t = boundaryPathsTD(cr - 1, cc, er, ec, moves - 1, strg);
+		int d = boundaryPathsTD(cr + 1, cc, er, ec, moves - 1, strg);
+		int l = boundaryPathsTD(cr, cc - 1, er, ec, moves - 1, strg);
+		int r = boundaryPathsTD(cr, cc + 1, er, ec, moves - 1, strg);
+
+		strg[moves][cr][cc] = t + d + l + r;
+
+		return t + d + l + r;
+	}
+
+	public static int boundaryPathsBU(int cr, int cc, int er, int ec, int moves) {
+
+		int[][][] strg = new int[moves + 1][er + 1][ec + 1];
+
+		for (int m = 1; m <= moves; m++) {
+
+			for (int r = 0; r <= er; r++) {
+
+				for (int c = 0; c <= ec; c++) {
+
+					// copy
+					int top = r - 1 < 0 ? 1 : strg[m - 1][r - 1][c];
+					int down = r + 1 > er ? 1 : strg[m - 1][r + 1][c];
+					int left = c - 1 < 0 ? 1 : strg[m - 1][r][c - 1];
+					int right = c + 1 > ec ? 1 : strg[m - 1][r][c + 1];
+
+					strg[m][r][c] = (top + down + left + right) % 1_000_000_007;
+
+				}
+			}
+		}
+
+		return strg[moves][cr][cc];
 
 	}
 

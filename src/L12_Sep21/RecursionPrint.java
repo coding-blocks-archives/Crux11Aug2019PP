@@ -21,7 +21,7 @@ public class RecursionPrint {
 
 		// coinToss(3, "");
 
-		// validParenthesis(2, "", 0, 0);
+		validParenthesis(10, "", 0, 0);
 
 		// System.out.println(boardPath(0, 10, ""));
 
@@ -31,7 +31,7 @@ public class RecursionPrint {
 
 		// palindromePartitioning("nitin", "");
 
-		coinTossNoConsecutiveHead(3, "", false);
+		// coinTossNoConsecutiveHead(3, "", false);
 
 	}
 
@@ -138,7 +138,7 @@ public class RecursionPrint {
 	public static void validParenthesis(int n, String ans, int open, int close) {
 
 		if (open == n && close == n) {
-			System.out.println(ans);
+			System.out.println(++count + "  " + ans);
 			return;
 		}
 
