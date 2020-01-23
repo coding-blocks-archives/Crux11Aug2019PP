@@ -652,4 +652,98 @@ public class BinaryTree {
 
 	}
 
+	public void kFar(int k, int dst) {
+		kFar(this.root, k, dst);
+	}
+
+	private int kFar(Node node, int k, int dst) {
+
+		if (node == null) {
+			return -1;
+		}
+
+		if (node.data == dst) {
+			kDown(node, 0, k);
+			return 0;
+		}
+
+		int ld = kFar(node.left, k, dst);
+
+		if (ld != -1) {
+
+			if (ld + 1 == k) {
+				System.out.println(node.data);
+			}
+
+			kDown(node.right, 0, k - ld - 2);
+
+			return ld + 1;
+		}
+
+		int rd = kFar(node.right, k, dst);
+
+		if (rd != -1) {
+
+			if (rd + 1 == k) {
+				System.out.println(node.data);
+			}
+
+			kDown(node.left, 0, k - rd - 2);
+
+			return rd + 1;
+		}
+
+		return -1;
+
+	}
+
+	private void kDown(Node node, int count, int k) {
+
+		if (node == null) {
+			return;
+		}
+
+		if (count == k) {
+			System.out.println(node.data);
+			return;
+		}
+
+		kDown(node.left, count + 1, k);
+		kDown(node.right, count + 1, k);
+	}
+
+	public void LCA(int n1, int n2) {
+
+		LCA(root, n1, n2);
+	}
+
+	public boolean LCA(Node node, int n1, int n2) {
+
+		if (node == null) {
+			return false;
+		}
+
+		if (node.data == n1 || node.data == n2) {
+
+			boolean tempL = LCA(node.left, n1, n2);
+			boolean tempR = LCA(node.right, n1, n2);
+
+			if (tempL || tempR) {
+				System.out.println(node.data);
+			}
+			return true;
+
+		}
+
+		boolean left = LCA(node.left, n1, n2);
+		boolean right = LCA(node.right, n1, n2);
+
+		if (left && right) {
+			System.out.println(node.data);
+		}
+
+		return left || right;
+
+	}
+
 }
