@@ -503,7 +503,7 @@ public class LinkedList {
 
 	public void kReverse(int k) throws Exception {
 
-		LinkedList prev = null ;
+		LinkedList prev = null;
 
 		while (size != 0) {
 
@@ -522,26 +522,45 @@ public class LinkedList {
 			}
 		}
 
-		this.head = prev.head ;
-		this.tail = prev.tail ;
-		this.size = prev.size ;
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+		this.head = prev.head;
+		this.tail = prev.tail;
+		this.size = prev.size;
+
+	}
+
+	public void OddEven() {
+
+		Node fake_head_even = new Node();
+		Node fake_head_odd = new Node();
+
+		Node even = fake_head_even;
+		Node odd = fake_head_odd;
+
+		Node temp = this.head;
+
+		while (temp != null) {
+
+			if (temp.data % 2 == 0) {
+
+				even.next = temp;
+				even = even.next;
+			} else {
+
+				odd.next = temp;
+				odd = odd.next;
+			}
+
+			temp = temp.next;
+
+		}
+
+		// Attach
+		odd.next = fake_head_even.next;
+
+		this.head = fake_head_odd.next;
+		this.tail = even;
+		this.tail.next = null;
+
 	}
 
 }
-
-
-
-
